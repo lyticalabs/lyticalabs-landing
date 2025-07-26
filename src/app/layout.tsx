@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Navigation } from "@/components/Navigation";
+import { ConditionalNavigation } from "@/components/ConditionalNavigation";
 import Head from "next/head";
 
 const geistSans = localFont({
@@ -43,7 +43,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
+          <ConditionalNavigation />
           {children}
         </ThemeProvider>
       </body>
