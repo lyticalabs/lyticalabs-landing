@@ -104,7 +104,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         <div className="text-center space-y-3 sm:space-y-4">
           <h3 className="text-xl sm:text-2xl font-bold text-green-400">Message Sent!</h3>
           <p className="text-gray-300 text-sm sm:text-base">
-            Thank you for your interest. Our sales team will get back to you shortly.
+            Thank you for your interest. Our team will get back to you shortly.
           </p>
           <button
             onClick={handleClose}
