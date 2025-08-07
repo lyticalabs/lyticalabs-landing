@@ -87,7 +87,7 @@ export function DataVisualization() {
           })}
 
           {/* Static content for SSR - positioned within bounds */}
-          <div className="absolute top-4 right-4 sm:top-2 sm:right-2 z-30">
+          <div className="absolute top-2 right-2 sm:top-0 sm:right-0 z-30">
             <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3 min-w-24 sm:min-w-32">
               <div className="flex items-end gap-1 h-12">
                 {dataPoints.slice(0, 8).map((point, index) => (
@@ -102,14 +102,14 @@ export function DataVisualization() {
             </div>
           </div>
 
-          <div className="absolute bottom-4 left-4 sm:bottom-2 sm:left-2 z-30">
+          <div className="absolute bottom-2 left-2 sm:bottom-0 sm:left-0 z-30">
             <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3">
               <div className="text-2xl font-bold text-green-400">85%</div>
               <div className="text-xs text-gray-400">Processing Rate</div>
             </div>
           </div>
 
-          <div className="absolute bottom-4 right-4 sm:bottom-2 sm:right-2 z-30">
+          <div className="absolute bottom-2 right-2 sm:bottom-0 sm:right-0 z-30">
             <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3 flex flex-col items-center justify-center min-h-20 sm:min-h-24">
               <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 32 32">
@@ -282,7 +282,7 @@ export function DataVisualization() {
         })}
 
         {/* Floating Data Charts - positioned within bounds */}
-        <div className="absolute top-4 right-4 sm:top-2 sm:right-2 z-30">
+        <div className="absolute top-2 right-2 sm:top-0 sm:right-0 z-30">
           <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3 min-w-24 sm:min-w-32">
             <div className="flex items-end gap-1 h-12">
               {dataPoints.slice(0, 8).map((point, index) => (
@@ -298,7 +298,7 @@ export function DataVisualization() {
         </div>
 
         {/* Data Metrics Display */}
-        <div className="absolute bottom-4 left-4 sm:bottom-2 sm:left-2 z-30">
+        <div className="absolute bottom-2 left-2 sm:bottom-0 sm:left-0 z-30">
           <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3">
             <div className="text-2xl font-bold text-green-400">
               {Math.floor(85 + Math.sin(animationProgress * 0.1) * 10)}%
@@ -308,7 +308,7 @@ export function DataVisualization() {
         </div>
 
         {/* Thick Line Pie Chart - Bottom Right */}
-        <div className="absolute bottom-4 right-4 sm:bottom-2 sm:right-2 z-30">
+        <div className="absolute bottom-2 right-2 sm:bottom-0 sm:right-0 z-30">
           <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3 flex flex-col items-center justify-center min-h-20 sm:min-h-24">
             <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 32 32">
