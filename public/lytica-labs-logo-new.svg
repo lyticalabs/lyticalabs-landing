@@ -1,5 +1,97 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
-  <polygon points="25,15 50,27 50,53 25,65 0,53 0,27" fill="none" stroke="#22c55e" stroke-width="2" opacity="0.8"/>
-  <circle cx="25" cy="40" r="4" fill="#84cc16"/>
-  <text x="70" y="45" font-family="sans-serif" font-size="24" font-weight="700" fill="white">Lytica Labs</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <!-- Logo Mark - Geometric data visualization symbol -->
+  <g transform="translate(30, 30)">
+    <!-- Outer hexagon representing data structure -->
+    <polygon 
+      points="70,20 110,40 110,80 70,100 30,80 30,40" 
+      fill="none" 
+      stroke="#22c55e" 
+      stroke-width="3"
+      opacity="0.8"
+    />
+    
+    <!-- Inner connected nodes representing analytics -->
+    <circle cx="50" cy="60" r="4" fill="#22c55e"/>
+    <circle cx="70" cy="45" r="4" fill="#84cc16"/>
+    <circle cx="90" cy="60" r="4" fill="#22c55e"/>
+    <circle cx="70" cy="75" r="4" fill="#84cc16"/>
+    
+    <!-- Connection lines -->
+    <line x1="50" y1="60" x2="70" y2="45" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+    <line x1="70" y1="45" x2="90" y2="60" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+    <line x1="90" y1="60" x2="70" y2="75" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+    <line x1="70" y1="75" x2="50" y2="60" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+    
+    <!-- Central core -->
+    <circle cx="70" cy="60" r="6" fill="#84cc16"/>
+    
+    <!-- Data flow indicators -->
+    <path 
+      d="M 20 30 Q 45 35 70 30" 
+      stroke="#22c55e" 
+      stroke-width="2" 
+      fill="none" 
+      opacity="0.4"
+    />
+    <path 
+      d="M 120 90 Q 95 85 70 90" 
+      stroke="#22c55e" 
+      stroke-width="2" 
+      fill="none" 
+      opacity="0.4"
+    />
+  </g>
+  
+  <!-- Company Name Typography -->
+  <g transform="translate(180, 60)">
+    <!-- "Lytica" text -->
+    <text 
+      x="0" 
+      y="40" 
+      font-family="system-ui, -apple-system, sans-serif" 
+      font-size="48" 
+      font-weight="700" 
+      fill="#ffffff" 
+      letter-spacing="-1px"
+    >
+      Lytica
+    </text>
+    
+    <!-- "Labs" text -->
+    <text 
+      x="0" 
+      y="80" 
+      font-family="system-ui, -apple-system, sans-serif" 
+      font-size="28" 
+      font-weight="400" 
+      fill="#22c55e" 
+      letter-spacing="1px"
+    >
+      LABS
+    </text>
+    
+    <!-- Subtle accent line -->
+    <line 
+      x1="0" 
+      y1="90" 
+      x2="120" 
+      y2="90" 
+      stroke="#22c55e" 
+      stroke-width="2" 
+      opacity="0.3"
+    />
+  </g>
+  
+  <!-- Optional tagline -->
+  <text 
+    x="180" 
+    y="160" 
+    font-family="system-ui, -apple-system, sans-serif" 
+    font-size="14" 
+    font-weight="300" 
+    fill="#9ca3af" 
+    letter-spacing="0.5px"
+  >
+    GENERATIVE ANALYTICS PLATFORM
+  </text>
+</svg> 
