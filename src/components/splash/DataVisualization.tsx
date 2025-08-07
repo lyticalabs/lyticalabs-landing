@@ -86,8 +86,8 @@ export function DataVisualization() {
             );
           })}
 
-          {/* Static content for SSR - positioned within bounds */}
-          <div className="absolute top-2 right-2 sm:top-0 sm:right-0 z-30">
+          {/* Static content for SSR - positioned further outside circle */}
+          <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 z-30">
             <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3 min-w-24 sm:min-w-32">
               <div className="flex items-end gap-1 h-12">
                 {dataPoints.slice(0, 8).map((point, index) => (
@@ -281,8 +281,8 @@ export function DataVisualization() {
           );
         })}
 
-        {/* Floating Data Charts - positioned within bounds */}
-        <div className="absolute top-2 right-2 sm:top-0 sm:right-0 z-30">
+        {/* Floating Data Charts - positioned further outside circle */}
+        <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 z-30">
           <div className="bg-gray-900/80 backdrop-blur-sm border border-green-400/30 rounded-lg p-2 sm:p-3 min-w-24 sm:min-w-32">
             <div className="flex items-end gap-1 h-12">
               {dataPoints.slice(0, 8).map((point, index) => (

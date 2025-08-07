@@ -21,7 +21,7 @@ const DataVisualization = dynamic(() => import('@/components/splash/DataVisualiz
         </div>
         
         {/* Skeleton overlay boxes */}
-        <div className="absolute top-2 right-2 z-30">
+        <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 z-30">
           <div className="bg-gray-900/60 border border-green-400/20 rounded-lg p-3 w-32 h-16 animate-pulse" />
         </div>
         <div className="absolute bottom-2 left-2 z-30">
