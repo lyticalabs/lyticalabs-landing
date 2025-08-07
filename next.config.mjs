@@ -3,11 +3,15 @@ const nextConfig = {
     reactStrictMode: true,
     images: {
         domains: ['avatars.githubusercontent.com'],
+        unoptimized: true, // Required for static export
     },
     // Handle hydration mismatches more gracefully
     experimental: {
         suppressHydrationWarnings: true,
     },
+    // Enable static export
+    output: 'export',
+    trailingSlash: true,
     // Custom webpack config to handle client-side only libraries
     webpack: (config, { isServer }) => {
         if (!isServer) {

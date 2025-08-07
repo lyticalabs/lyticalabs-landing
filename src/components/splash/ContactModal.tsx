@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Modal } from "@/components/ui/modal"
+import { submitContact } from "@/lib/api"
 
 interface ContactModalProps {
   isOpen: boolean
@@ -45,15 +46,19 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+      const contactData = {
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.workEmail,
+        company: formData.companyName,
+        message: formData.message,
+        // Additional fields for context
+        companySize: formData.companySize,
+        country: formData.country,
+      }
 
-      if (response.ok) {
+      const success = await submitContact(contactData)
+
+      if (success) {
         setIsSuccess(true)
         setFormData({
           workEmail: '',
@@ -66,9 +71,11 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         })
       } else {
         console.error('Failed to send contact form')
+        // You might want to show an error message to the user here
       }
     } catch (error) {
       console.error('Error sending contact form:', error)
+      // You might want to show an error message to the user here
     } finally {
       setIsSubmitting(false)
     }

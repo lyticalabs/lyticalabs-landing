@@ -6,6 +6,8 @@
     "kill": "for port in {3000..3010}; do lsof -ti:$port | xargs kill -9 2>/dev/null || true; done",
     "dev": "next dev --turbo",
     "build": "next build",
+    "export": "next build",
+    "deploy": "next build && touch out/.nojekyll",
     "start": "next start",
     "lint": "next lint"
   },

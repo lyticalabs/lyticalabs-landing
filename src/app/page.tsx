@@ -4,6 +4,8 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { WaitlistSuccessModal } from '@/components/splash/WaitlistSuccessModal';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { submitWaitlist } from '@/lib/api';
 
 // Dynamic imports to prevent hydration issues
 const DataVisualization = dynamic(() => import('@/components/splash/DataVisualization').then(mod => ({ default: mod.DataVisualization })), { 
@@ -34,6 +36,7 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,32 +45,22 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      // Submit to Google Sheets
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          timestamp: new Date().toISOString(),
-        }),
-      });
-
-      if (response.ok) {
+      const success = await submitWaitlist(email);
+      
+      if (success) {
         // Show success modal
         setIsModalOpen(true);
         // Clear email input
         setEmail('');
       } else {
         console.error('Failed to submit to waitlist');
-        // Fallback: still show modal for user experience
+        // Still show modal for user experience (they can try again)
         setIsModalOpen(true);
         setEmail('');
       }
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
-      // Fallback: still show modal for user experience
+      // Still show modal for user experience
       setIsModalOpen(true);
       setEmail('');
     } finally {
@@ -96,8 +89,8 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
               
               {/* Left Side - Hero Text */}
-              <div className="text-center md:text-left">
-                <div className="space-y-4 md:space-y-5">
+              <div className="text-center md:text-left mt-5">
+                <div className="space-y-3 md:space-y-4">
                   <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-white via-green-100 to-green-400 bg-clip-text text-transparent">
                       Generative
@@ -114,8 +107,9 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Desktop Form - Shown on md and up */}
-                <form onSubmit={handleWaitlistSubmit} className="hidden md:block space-y-4 w-full max-w-lg mx-auto md:mx-0 mt-8">
+                {/* Desktop Form - Shown when not on mobile device */}
+                {!isMobile && (
+                  <form onSubmit={handleWaitlistSubmit} className="space-y-4 w-full max-w-lg mx-auto md:mx-0 mt-8">
                   <div className="flex flex-col sm:flex-row gap-4 w-full">
                     <input
                       type="email"
@@ -138,20 +132,24 @@ export default function Home() {
                       Be the first to experience next-generation analytics
                     </span>
                   </p>
-                </form>
+                  </form>
+                )}
               </div>
 
               {/* Right Side - Data Visualization */}
-              <div className="relative hidden md:flex justify-center items-center min-h-[300px] md:min-h-[350px]">
-                <div className="w-full max-w-md md:max-w-lg scale-75 sm:scale-90 md:scale-100">
-                  <DataVisualization />
+              {!isMobile && (
+                <div className="relative flex justify-center items-center min-h-[300px] md:min-h-[350px]">
+                  <div className="w-full max-w-md md:max-w-lg scale-75 sm:scale-90 md:scale-100">
+                    <DataVisualization />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
           {/* Mobile Form Section - Positioned at bottom on mobile */}
-          <div className="md:hidden max-w-lg mx-auto w-full">
+          {isMobile && (
+            <div className="max-w-lg mx-auto w-full">
             <form onSubmit={handleWaitlistSubmit} className="space-y-4 w-full">
               <div className="flex flex-col gap-4 w-full">
                 <input
@@ -196,10 +194,12 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          )}
 
           {/* Desktop Stats Section - Hidden on mobile */}
-          <div className="hidden md:block max-w-7xl mx-auto w-full mt-8">
+          {!isMobile && (
+            <div className="max-w-7xl mx-auto w-full mt-8">
             <div className="max-w-lg mx-auto">
               <div className="bg-gray-900/30 backdrop-blur-sm border border-green-400/20 rounded-lg p-4 md:p-6">
                 <div className="grid grid-cols-3 gap-4 md:gap-6">
@@ -218,12 +218,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          )}
         </div>
         </section>
 
         {/* Copyright Footer - Fixed at bottom */}
-        <footer className="relative z-10 py-6 mt-auto">
+        <footer className="relative z-10 pb-6 pt-0 -mt-7.5">
           <div className="text-center space-y-3 px-4 sm:px-6 lg:px-8">
             {/* Horizontal Line */}
             <div className="w-32 h-px bg-gradient-to-r from-transparent via-white to-transparent mx-auto"></div>
