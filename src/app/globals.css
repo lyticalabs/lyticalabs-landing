@@ -36,6 +36,26 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Shine animation for text effects */
+@keyframes shine-text {
+  0% {
+    background-position: 300% center;
+  }
+  100% {
+    background-position: -300% center;
+  }
+}
+
+.animate-shine-text {
+  background: linear-gradient(90deg, rgb(107, 114, 128) 30%, rgb(255, 255, 255) 50%, rgb(107, 114, 128) 70%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine-text 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

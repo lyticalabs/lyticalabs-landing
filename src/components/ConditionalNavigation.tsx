@@ -5,13 +5,13 @@ import { Navigation } from './Navigation';
 
 /**
  * Conditional navigation wrapper that excludes navigation from specific routes
- * Currently excludes: /splash
+ * Currently excludes: / (root/splash page), /deprecated
  */
 export function ConditionalNavigation() {
   const pathname = usePathname();
   
   // Routes where navigation should be hidden
-  const hideNavigationRoutes = ['/splash'];
+  const hideNavigationRoutes = ['/', '/deprecated'];
   
   // Check if current route should hide navigation
   const shouldHideNavigation = hideNavigationRoutes.some(route => 

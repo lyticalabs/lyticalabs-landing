@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
+  <!-- Simple L-shaped icon -->
+  <g transform="translate(2, 8)">
+    <!-- Upper diagonal piece -->
+    <path d="M 0 0 L 12 0 L 18 6 L 6 6 Z" fill="#ffffff"/>
+    
+    <!-- Green accent piece -->
+    <path d="M 6 6 L 18 6 L 18 12 L 6 12 Z" fill="#22c55e"/>
+    
+    <!-- Lower L piece -->
+    <path d="M 0 6 L 6 6 L 6 18 L 24 18 L 24 24 L 0 24 Z" fill="#ffffff"/>
+  </g>
+  
+  <!-- Lytica Labs Text -->
+  <text x="32" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Lytica</text>
+  <text x="96" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Labs</text>
+</svg>
