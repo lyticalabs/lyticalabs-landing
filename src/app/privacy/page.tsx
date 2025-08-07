@@ -187,7 +187,7 @@ export default function PrivacyPage() {
 
               <div className="mb-6">
                 <h4 className="text-lg font-semibold text-white mb-3">Cookies and Tracking Technologies</h4>
-                <p className="text-gray-300">Like many businesses, we also collect information through cookies and similar technologies. For detailed information about our use of cookies, please see our <a href="/cookie-policy" className="text-green-400 hover:text-green-300 transition-colors">Cookie Policy</a>.</p>
+                <p className="text-gray-300">Like many businesses, we also collect information through cookies and similar technologies. For detailed information about our use of cookies, please see our <a href="/cookie-policy/" className="text-green-400 hover:text-green-300 transition-colors">Cookie Policy</a>.</p>
               </div>
             </section>
 

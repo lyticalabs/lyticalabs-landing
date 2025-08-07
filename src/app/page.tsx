@@ -114,7 +114,7 @@ export default function Home() {
               {/* Left Side - Hero Text */}
               <div className="text-center md:text-left mt-5">
                 <div className="space-y-3 md:space-y-4">
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-tight">
+                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-white via-green-100 to-green-400 bg-clip-text text-transparent">
                       Generative
                     </span>
@@ -278,9 +278,9 @@ export default function Home() {
             <p className="text-sm bg-gradient-to-r from-green-200 via-white to-green-200 bg-clip-text text-transparent">
               Copyright © 2025 <span className="font-bold">Lytica Inc.</span> All Rights Reserved.
               <span className="mx-2">•</span>
-              <a href="/privacy" className="hover:text-green-300 transition-colors duration-200">Privacy Policy</a>
+              <a href="/privacy/" className="hover:text-green-300 transition-colors duration-200">Privacy Policy</a>
               <span className="mx-2">•</span>
-              <a href="/terms-of-service" className="hover:text-green-300 transition-colors duration-200">Terms of Service</a>
+              <a href="/terms-of-service/" className="hover:text-green-300 transition-colors duration-200">Terms of Service</a>
             </p>
           </div>
         </footer>
