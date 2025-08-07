@@ -104,27 +104,28 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/waitlist', {
+      // Send directly to Railway webhook (bypassing API route for static export)
+      const response = await fetch('https://primary-production-b7da.up.railway.app/webhook/join-waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email,
+          timestamp: new Date().toISOString(),
+        }),
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Success - show success modal with message from API
-        setSuccessMessage(data.message || 'Successfully joined the waitlist!');
+      if (response.ok) {
+        // Success - show success modal
+        setSuccessMessage('Successfully joined the waitlist!');
         setIsSuccessModalOpen(true);
         setEmail(''); // Clear email input
       } else {
-        // API returned error - handle specific error types
-        let errorMsg = data.error || 'Failed to join waitlist. Please try again.';
-        
         // Handle specific error scenarios
-        if (data.errorType === 'duplicate' || response.status === 409) {
+        let errorMsg = 'Failed to join waitlist. Please try again.';
+        
+        if (response.status === 409) {
           errorMsg = 'You are already on the waitlist';
         } else if (response.status >= 500) {
           errorMsg = 'Join Waitlist Failure, Please try again';

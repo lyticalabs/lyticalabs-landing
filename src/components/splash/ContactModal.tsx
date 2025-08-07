@@ -48,28 +48,27 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     setError(null)
 
     try {
-      // Send data directly to contact API with proper field mapping
-      const contactData = {
-        workEmail: formData.workEmail,
+      // Send data directly to Railway webhook (bypassing API route for static export)
+      const webhookPayload = {
+        email: formData.workEmail,
+        url: 'lyticalabs.ai',
+        company: formData.companyName,
         firstName: formData.firstName,
         lastName: formData.lastName,
-        companyName: formData.companyName,
         companySize: formData.companySize,
         country: formData.country,
         message: formData.message
       }
 
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://primary-production-b7da.up.railway.app/webhook/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(contactData),
+        body: JSON.stringify(webhookPayload),
       })
 
-      const data = await response.json()
-
-      if (response.ok && data.success) {
+      if (response.ok) {
         setIsSuccess(true)
         setFormData({
           workEmail: '',
@@ -81,8 +80,9 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
           message: 'How can we help?'
         })
       } else {
-        setError(data.error || 'Failed to send message. Please try again.')
-        console.error('Failed to send contact form:', data.error || 'Unknown error')
+        const errorText = await response.text()
+        setError('Failed to send message. Please try again.')
+        console.error('Failed to send contact form:', response.status, errorText)
       }
     } catch (error) {
       setError('An unexpected error occurred. Please try again.')
