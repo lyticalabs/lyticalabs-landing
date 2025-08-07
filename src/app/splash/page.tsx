@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { DataVisualization } from '@/components/splash/DataVisualization';
 import { GlowingOrbs } from '@/components/splash/GlowingOrbs';
 import { AnimatedGrid } from '@/components/splash/AnimatedGrid';
+import { SplashHeader } from '@/components/splash/SplashHeader';
 
 export default function SplashPage() {
   const [email, setEmail] = useState('');
@@ -25,107 +25,104 @@ export default function SplashPage() {
         <GlowingOrbs />
       </div>
 
-      {/* Logo - Top Left */}
-      <div className="absolute top-6 left-6 z-20">
-        <Image
-          src="/lytica-labs-logo-new.svg"
-          alt="Lytica Labs"
-          width={640}
-          height={160}
-          className="h-12 w-auto"
-        />
-      </div>
-
-      {/* Contact Us & Login - Top Right */}
-      <div className="absolute top-6 right-6 z-20 flex gap-3">
-        <Button 
-          variant="outline" 
-          className="border-green-400/30 text-green-400 hover:bg-green-400/10 hover:border-green-400"
-        >
-          Contact Us
-        </Button>
-        <Button 
-          variant="outline" 
-          className="border-gray-400/30 text-gray-300 hover:bg-gray-400/10 hover:border-gray-400 hover:text-white"
-        >
-          Login
-        </Button>
-      </div>
+      {/* Header with Logo and Buttons */}
+      <SplashHeader />
 
       {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Side - Content */}
-          <div className="space-y-8">
-            {/* Hero Text */}
-            <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="bg-gradient-to-r from-white via-green-100 to-green-400 bg-clip-text text-transparent">
-                  Generative
-                </span>
-                <br />
-                <span className="text-white">Analytics</span>
-                <br />
-                <span className="text-gray-400">Redefined</span>
-              </h1>
+      <div className="relative z-10 h-screen flex flex-col px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
+        <div className="flex-1 flex flex-col justify-center">
+          {/* Top Section - Hero Text and Form */}
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center w-full mb-8">
+            
+            {/* Left Side - Content */}
+            <div className="space-y-8 md:space-y-10 text-center md:text-left">
+              {/* Hero Text */}
+              <div className="space-y-4 md:space-y-5">
+                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-white via-green-100 to-green-400 bg-clip-text text-transparent">
+                    Generative
+                  </span>
+                  <br />
+                  <span className="text-white">Analytics</span>
+                  <br />
+                  <span className="text-gray-400">Redefined</span>
+                </h1>
 
-              <p className="text-xl text-gray-300 leading-relaxed max-w-lg">
-                Transform your data into actionable insights with AI-powered analytics. 
-                Experience the future of data intelligence today.
-              </p>
+                <p className="text-base md:text-lg text-gray-300 leading-relaxed max-w-none md:max-w-2xl mx-auto md:mx-0">
+                  Transform your data into actionable insights with AI-powered analytics. 
+                  Experience the future of data intelligence today.
+                </p>
+              </div>
+
+              {/* Waitlist Form */}
+              <form onSubmit={handleWaitlistSubmit} className="space-y-4 w-full max-w-lg mx-auto md:mx-0">
+                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 text-white placeholder-gray-400 h-12 text-base"
+                    required
+                  />
+                  <Button 
+                    type="submit"
+                    className="bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 text-black font-semibold px-6 sm:px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25 h-12 text-base whitespace-nowrap"
+                  >
+                    Join Waitlist
+                  </Button>
+                </div>
+                <p className="text-sm text-gray-500 text-center md:text-left">
+                  Be the first to experience next-generation analytics
+                </p>
+              </form>
             </div>
 
-            {/* Waitlist Form */}
-            <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 text-white placeholder-gray-400 h-12"
-                  required
-                />
-                <Button 
-                  type="submit"
-                  className="bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 text-black font-semibold px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25 h-12"
-                >
-                  Join Waitlist
-                </Button>
+            {/* Right Side - Data Visualization */}
+            <div className="relative flex justify-center items-center min-h-[300px] md:min-h-[350px]">
+              <div className="w-full max-w-md md:max-w-lg scale-75 sm:scale-90 md:scale-100">
+                <DataVisualization />
               </div>
-              <p className="text-sm text-gray-500">
-                Be the first to experience next-generation analytics
-              </p>
-            </form>
+            </div>
+          </div>
 
-            {/* Stats */}
-            <div className="max-w-md pt-4">
-              <div className="bg-gray-900/30 backdrop-blur-sm border border-green-400/20 rounded-lg p-4">
-                <div className="grid grid-cols-3 gap-6">
+          {/* Bottom Section - Stats */}
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="max-w-lg mx-auto">
+              <div className="bg-gray-900/30 backdrop-blur-sm border border-green-400/20 rounded-lg p-4 md:p-6">
+                <div className="grid grid-cols-3 gap-4 md:gap-6">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-400">10x</div>
-                    <div className="text-sm text-gray-400">Faster Insights</div>
+                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">10x</div>
+                    <div className="text-xs md:text-sm text-gray-400">Faster Insights</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-400">12</div>
-                    <div className="text-sm text-gray-400">Data Sources</div>
+                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">12+</div>
+                    <div className="text-xs md:text-sm text-gray-400">Data Sources</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-400">70%</div>
-                    <div className="text-sm text-gray-400">Input Reduction</div>
+                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">70%</div>
+                    <div className="text-xs md:text-sm text-gray-400">Less Input Time</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Right Side - Data Visualization */}
-          <div className="relative">
-            <DataVisualization />
+        {/* Copyright Notice - Pushed to Bottom */}
+        <div className="mt-auto pb-6">
+          <div className="text-center space-y-3">
+            {/* Horizontal Line */}
+            <div className="w-32 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent mx-auto"></div>
+            
+            <p className="text-sm bg-gradient-to-r from-gray-400 via-green-200 to-gray-400 bg-clip-text text-transparent">
+              Copyright © 2025 <span className="font-bold">Lytica Inc.</span> All Rights Reserved.
+            </p>
           </div>
         </div>
       </div>
+
+
 
       {/* Bottom Gradient */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-green-500/10 to-transparent pointer-events-none" />

@@ -17,8 +17,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Shadcn landing page",
-  description: "Landing page for free and open source software",
+  title: "Lytica Labs AI",
+  description: "Landing page for Lytica Labs",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <Head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta charSet="UTF-8" />
