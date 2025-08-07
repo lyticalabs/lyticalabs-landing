@@ -160,8 +160,8 @@ export default function Home() {
 
               {/* Right Side - Data Visualization */}
               {!isMobile && (
-                <div className="relative flex justify-center items-center min-h-[300px] md:min-h-[350px]">
-                  <div className="w-full max-w-md md:max-w-lg scale-75 sm:scale-90 md:scale-100">
+                <div className="relative flex justify-center items-center min-h-[300px] md:min-h-[350px] py-8">
+                  <div className="w-full max-w-md md:max-w-lg scale-75 sm:scale-90 md:scale-100 overflow-hidden">
                     <DataVisualization />
                   </div>
                 </div>
