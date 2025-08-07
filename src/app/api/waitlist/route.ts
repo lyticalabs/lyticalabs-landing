@@ -1,41 +1,79 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Waitlist API route that submits email to Railway webhook
+ * Provides proper success/error feedback for professional UX
+ */
 export async function POST(request: NextRequest) {
   try {
-    const { email, timestamp } = await request.json();
+    const { email } = await request.json();
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    // Google Sheets Web App URL (you'll need to deploy a Google Apps Script)
-    const GOOGLE_SHEETS_URL = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-
-    if (!GOOGLE_SHEETS_URL) {
-      console.error('Google Sheets webhook URL not configured');
-      // Return success to user even if sheets integration fails
-      return NextResponse.json({ success: true });
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
     }
 
-    // Submit to Google Sheets
-    const response = await fetch(GOOGLE_SHEETS_URL, {
+    // Railway webhook URL
+    const RAILWAY_WEBHOOK_URL = 'https://primary-production-b7da.up.railway.app/webhook/join-waitlist';
+
+    // Submit to Railway webhook
+    const response = await fetch(RAILWAY_WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         email,
-        timestamp,
+        timestamp: new Date().toISOString(),
       }),
     });
 
-    if (!response.ok) {
-      console.error('Failed to submit to Google Sheets:', response.statusText);
+    // Parse response from Railway webhook
+    let webhookData;
+    try {
+      webhookData = await response.json();
+    } catch (parseError) {
+      console.error('Failed to parse Railway webhook response:', parseError);
+      webhookData = null;
     }
 
-    return NextResponse.json({ success: true });
+    if (!response.ok) {
+      console.error('Failed to submit to Railway webhook:', response.status, response.statusText, webhookData);
+      
+      // Check for specific error types from Railway webhook
+      if (response.status === 409 || (webhookData && webhookData.error && webhookData.error.includes('already'))) {
+        // Email already exists
+        return NextResponse.json({ 
+          success: false,
+          error: 'You are already on the waitlist',
+          errorType: 'duplicate'
+        }, { status: 409 });
+      }
+      
+      // Generic error
+      return NextResponse.json({
+        success: false,
+        error: 'Failed to join waitlist. Please try again.',
+        errorType: 'generic'
+      }, { status: 500 });
+    }
+
+    // Success response
+    const successMessage = webhookData?.message || 'Successfully joined the waitlist!';
+    return NextResponse.json({ 
+      success: true, 
+      message: successMessage
+    });
   } catch (error) {
     console.error('Error in waitlist API:', error);
-    return NextResponse.json({ success: true }); // Return success to user even if there's an error
+    return NextResponse.json(
+      { error: 'An unexpected error occurred. Please try again.' }, 
+      { status: 500 }
+    );
   }
 }

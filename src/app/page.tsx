@@ -4,8 +4,8 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { WaitlistSuccessModal } from '@/components/splash/WaitlistSuccessModal';
+import { WaitlistErrorModal } from '@/components/splash/WaitlistErrorModal';
 import { useIsMobile } from '@/hooks/useIsMobile';
-import { submitWaitlist } from '@/lib/api';
 
 // Dynamic imports to prevent hydration issues
 const DataVisualization = dynamic(() => import('@/components/splash/DataVisualization').then(mod => ({ default: mod.DataVisualization })), { 
@@ -34,10 +34,18 @@ const SplashHeader = dynamic(() => import('@/components/splash/SplashHeader').th
 
 export default function Home() {
   const [email, setEmail] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const isMobile = useIsMobile();
 
+  /**
+   * Handle waitlist form submission
+   * Submits to internal API route which forwards to Railway webhook
+   * Shows specific messages for success, failure, and duplicate email scenarios
+   */
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || isSubmitting) return;
@@ -45,24 +53,39 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      const success = await submitWaitlist(email);
-      
-      if (success) {
-        // Show success modal
-        setIsModalOpen(true);
-        // Clear email input
-        setEmail('');
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Success - show success modal with message from API
+        setSuccessMessage(data.message || 'Successfully joined the waitlist!');
+        setIsSuccessModalOpen(true);
+        setEmail(''); // Clear email input
       } else {
-        console.error('Failed to submit to waitlist');
-        // Still show modal for user experience (they can try again)
-        setIsModalOpen(true);
-        setEmail('');
+        // API returned error - handle specific error types
+        let errorMsg = data.error || 'Failed to join waitlist. Please try again.';
+        
+        // Handle specific error scenarios
+        if (data.errorType === 'duplicate' || response.status === 409) {
+          errorMsg = 'You are already on the waitlist';
+        } else if (response.status >= 500) {
+          errorMsg = 'Join Waitlist Failure, Please try again';
+        }
+        
+        setErrorMessage(errorMsg);
+        setIsErrorModalOpen(true);
       }
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
-      // Still show modal for user experience
-      setIsModalOpen(true);
-      setEmail('');
+      setErrorMessage('Network error. Please check your connection and try again.');
+      setIsErrorModalOpen(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -252,8 +275,12 @@ export default function Home() {
             {/* Horizontal Line */}
             <div className="w-32 h-px bg-gradient-to-r from-transparent via-white to-transparent mx-auto"></div>
             
-            <p className="text-sm bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
+            <p className="text-sm bg-gradient-to-r from-green-200 via-white to-green-200 bg-clip-text text-transparent">
               Copyright © 2025 <span className="font-bold">Lytica Inc.</span> All Rights Reserved.
+              <span className="mx-2">•</span>
+              <a href="/privacy" className="hover:text-green-300 transition-colors duration-200">Privacy Policy</a>
+              <span className="mx-2">•</span>
+              <a href="/terms-of-service" className="hover:text-green-300 transition-colors duration-200">Terms of Service</a>
             </p>
           </div>
         </footer>
@@ -261,8 +288,16 @@ export default function Home() {
       
       {/* Success Modal */}
       <WaitlistSuccessModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+        isOpen={isSuccessModalOpen} 
+        onClose={() => setIsSuccessModalOpen(false)}
+        message={successMessage}
+      />
+      
+      {/* Error Modal */}
+      <WaitlistErrorModal 
+        isOpen={isErrorModalOpen} 
+        onClose={() => setIsErrorModalOpen(false)}
+        errorMessage={errorMessage}
       />
     </main>
   );

@@ -9,74 +9,55 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
     }
 
-    // Create email content
-    const emailContent = {
-      to: 'sales@lyticalabs.ai',
-      subject: `New Contact Form Submission from ${firstName} ${lastName}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>From:</strong> ${firstName} ${lastName}</p>
-        <p><strong>Work Email:</strong> ${workEmail}</p>
-        <p><strong>Company:</strong> ${companyName}</p>
-        <p><strong>Company Size:</strong> ${companySize}</p>
-        <p><strong>Country:</strong> ${country}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-        <hr>
-        <p><em>Submitted on: ${new Date().toLocaleString()}</em></p>
-      `,
-      text: `
-New Contact Form Submission
-
-From: ${firstName} ${lastName}
-Work Email: ${workEmail}
-Company: ${companyName}
-Company Size: ${companySize}
-Country: ${country}
-
-Message:
-${message}
-
-Submitted on: ${new Date().toLocaleString()}
-      `
+    // Prepare webhook payload matching the required format
+    const webhookPayload = {
+      email: workEmail,
+      url: 'lyticalabs.ai',
+      company: companyName,
+      firstName,
+      lastName,
+      companySize,
+      country,
+      message
     };
 
-    // Use Resend API for sending emails
-    const resendApiKey = process.env.RESEND_API_KEY;
+    // Send data to webhook
+    const webhookUrl = 'https://primary-production-b7da.up.railway.app/webhook/contact';
     
-    if (!resendApiKey) {
-      console.error('Resend API key not configured');
-      // Return success to user even if email service isn't configured
+    try {
+      const webhookResponse = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookPayload),
+      });
+
+      if (!webhookResponse.ok) {
+        const errorData = await webhookResponse.text();
+        console.error('Failed to send data to webhook:', errorData);
+        return NextResponse.json({ 
+          success: false, 
+          error: 'Failed to submit contact form. Please try again.' 
+        }, { status: 500 });
+      }
+
+      console.log('Successfully sent contact data to webhook');
       return NextResponse.json({ success: true });
+
+    } catch (webhookError) {
+      console.error('Error sending to webhook:', webhookError);
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Failed to submit contact form. Please try again.' 
+      }, { status: 500 });
     }
 
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Contact Form <noreply@lyticalabs.ai>',
-        to: ['sales@lyticalabs.ai'],
-        subject: emailContent.subject,
-        html: emailContent.html,
-        text: emailContent.text,
-        reply_to: workEmail,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error('Failed to send email via Resend:', errorData);
-      
-      // Fallback: Try using a webhook or alternative method
-      // For now, we'll still return success to the user
-    }
-
-    return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error in contact API:', error);
-    return NextResponse.json({ success: true }); // Return success to user even if there's an error
+    return NextResponse.json({ 
+      success: false, 
+      error: 'An unexpected error occurred. Please try again.' 
+    }, { status: 500 });
   }
 }

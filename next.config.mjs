@@ -5,10 +5,6 @@ const nextConfig = {
         domains: ['avatars.githubusercontent.com'],
         unoptimized: true, // Required for static export
     },
-    // Handle hydration mismatches more gracefully
-    experimental: {
-        suppressHydrationWarnings: true,
-    },
     // Enable static export
     output: 'export',
     trailingSlash: true,

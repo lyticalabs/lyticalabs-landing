@@ -10,19 +10,27 @@ export function useIsMobile(): boolean {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Guard against SSR
+    if (typeof window === 'undefined') return;
+
     const checkIsMobile = () => {
-      // Check for mobile user agents
-      const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-      const isMobileDevice = mobileRegex.test(navigator.userAgent);
-      
-      // Also check for touch capability as secondary indicator
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      
-      // Consider it mobile if it's a mobile user agent OR has touch and small screen
-      const isSmallScreen = window.innerWidth < 768;
-      const actuallyMobile = isMobileDevice || (isTouchDevice && isSmallScreen);
-      
-      setIsMobile(actuallyMobile);
+      try {
+        // Check for mobile user agents
+        const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+        const isMobileDevice = mobileRegex.test(navigator.userAgent);
+        
+        // Also check for touch capability as secondary indicator
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        // Consider it mobile if it's a mobile user agent OR has touch and small screen
+        const isSmallScreen = window.innerWidth < 768;
+        const actuallyMobile = isMobileDevice || (isTouchDevice && isSmallScreen);
+        
+        setIsMobile(actuallyMobile);
+      } catch (error) {
+        // Fallback in case of any errors
+        setIsMobile(false);
+      }
     };
 
     // Check on mount
@@ -32,7 +40,10 @@ export function useIsMobile(): boolean {
     window.addEventListener('resize', checkIsMobile);
     
     return () => {
-      window.removeEventListener('resize', checkIsMobile);
+      // Guard against cleanup when window is not available
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', checkIsMobile);
+      }
     };
   }, []);
 

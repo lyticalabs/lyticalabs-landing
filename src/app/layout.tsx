@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ConditionalNavigation } from "@/components/ConditionalNavigation";
 import { NoSSR } from "@/components/NoSSR";
+import { ThemeFavicon } from "@/components/ThemeFavicon";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -63,6 +64,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ThemeFavicon />
             <ConditionalNavigation />
             {children}
           </ThemeProvider>

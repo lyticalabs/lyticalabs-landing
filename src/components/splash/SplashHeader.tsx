@@ -18,9 +18,7 @@ export function SplashHeader() {
         {/* Lytica Labs Full Logo - Left Side */}
         <div className="flex items-center">
           <a 
-            href="https://lyticalabs.ai" 
-            target="_blank" 
-            rel="noopener noreferrer"
+            href="/" 
             className="transition-opacity duration-300 hover:opacity-80"
           >
             <Image

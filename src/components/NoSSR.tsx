@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 /**
  * A wrapper component that only renders its children on the client side.
@@ -13,9 +13,17 @@ interface NoSSRProps {
 
 export function NoSSR({ children, fallback = null }: NoSSRProps) {
   const [hasMounted, setHasMounted] = useState(false);
+  const mountedRef = useRef(false);
 
   useEffect(() => {
-    setHasMounted(true);
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      setHasMounted(true);
+    }
+    
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
 
   if (!hasMounted) {
