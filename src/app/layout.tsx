@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ConditionalNavigation } from "@/components/ConditionalNavigation";
+import { NoSSR } from "@/components/NoSSR";
 import Head from "next/head";
 
 const geistSans = localFont({
@@ -36,16 +37,19 @@ export default function RootLayout({
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ConditionalNavigation />
-          {children}
-        </ThemeProvider>
+        <NoSSR fallback={<div className="min-h-screen bg-gray-950 text-white" />}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ConditionalNavigation />
+            {children}
+          </ThemeProvider>
+        </NoSSR>
       </body>
     </html>
   );
