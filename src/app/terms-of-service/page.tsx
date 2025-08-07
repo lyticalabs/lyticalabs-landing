@@ -9,7 +9,22 @@ import { useScrolled } from '@/hooks/useScrolled';
 // Dynamic imports for background effects
 const AnimatedGrid = dynamic(() => import('@/components/splash/AnimatedGrid').then(mod => ({ default: mod.AnimatedGrid })), { ssr: false });
 const GlowingOrbs = dynamic(() => import('@/components/splash/GlowingOrbs').then(mod => ({ default: mod.GlowingOrbs })), { ssr: false });
-const SplashHeader = dynamic(() => import('@/components/splash/SplashHeader').then(mod => ({ default: mod.SplashHeader })), { ssr: false });
+const SplashHeader = dynamic(() => import('@/components/splash/SplashHeader').then(mod => ({ default: mod.SplashHeader })), { 
+  ssr: true,
+  loading: () => (
+    <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20 flex items-center justify-between opacity-60">
+      {/* Logo skeleton with proper dimensions */}
+      <div className="flex items-center">
+        <div className="h-6 sm:h-7 w-[113px] bg-gray-700/40 rounded animate-pulse"></div>
+      </div>
+      {/* Buttons skeleton with proper spacing */}
+      <div className="flex gap-2 sm:gap-3">
+        <div className="h-8 sm:h-10 w-[70px] sm:w-[90px] bg-gray-700/40 rounded animate-pulse"></div>
+        <div className="h-8 sm:h-10 w-[50px] sm:w-[60px] bg-gray-700/40 rounded animate-pulse"></div>
+      </div>
+    </div>
+  )
+});
 
 export default function TermsOfServicePage() {
   const isScrolled = useScrolled(80);

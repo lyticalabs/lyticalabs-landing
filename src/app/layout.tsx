@@ -51,6 +51,8 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#22c55e" />
+        {/* Preload logo for faster loading across all pages */}
+        <link rel="preload" href="/Lytica_logo.png" as="image" />
       </head>
 
       <body
