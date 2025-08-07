@@ -7,12 +7,59 @@ import { WaitlistSuccessModal } from '@/components/splash/WaitlistSuccessModal';
 import { WaitlistErrorModal } from '@/components/splash/WaitlistErrorModal';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-// Dynamic imports to prevent hydration issues
+// Dynamic imports to prevent hydration issues  
 const DataVisualization = dynamic(() => import('@/components/splash/DataVisualization').then(mod => ({ default: mod.DataVisualization })), { 
-  ssr: false,
+  ssr: true,
   loading: () => (
-    <div className="w-full h-[300px] md:h-[350px] bg-gray-800/30 rounded-lg flex items-center justify-center">
-      <div className="text-gray-400">Loading visualization...</div>
+    <div className="relative w-full h-80 sm:h-96 flex items-center justify-center opacity-75">
+      {/* Loading skeleton that closely matches the actual visualization */}
+      <div className="relative w-80 h-80">
+        {/* Central core skeleton */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="w-20 h-20 bg-gradient-to-r from-green-400/30 to-lime-400/30 rounded-full animate-pulse" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-green-400/50 rounded-full animate-pulse" />
+        </div>
+        
+        {/* Skeleton overlay boxes */}
+        <div className="absolute top-2 right-2 z-30">
+          <div className="bg-gray-900/60 border border-green-400/20 rounded-lg p-3 w-32 h-16 animate-pulse" />
+        </div>
+        <div className="absolute bottom-2 left-2 z-30">
+          <div className="bg-gray-900/60 border border-green-400/20 rounded-lg p-3 w-24 h-16 animate-pulse" />
+        </div>
+        <div className="absolute bottom-2 right-2 z-30">
+          <div className="bg-gray-900/60 border border-green-400/20 rounded-lg p-3 w-24 h-20 animate-pulse" />
+        </div>
+        
+        {/* Orbiting dots skeleton */}
+        {[0, 1, 2, 3, 4, 5].map((index) => {
+          const angle = index * 60 * (Math.PI / 180);
+          const radius = 100;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+          return (
+            <div
+              key={index}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: `translate(${x}px, ${y}px)` }}
+            >
+              <div className="w-3 h-3 bg-green-400/40 rounded-full animate-pulse" />
+            </div>
+          );
+        })}
+        
+        {/* Circular progress skeleton */}
+        <svg className="absolute inset-0 w-full h-full transform -rotate-90 z-10 opacity-30" viewBox="0 0 100 100">
+          <circle
+            cx="50"
+            cy="50"
+            r="45"
+            fill="none"
+            stroke="rgb(75 85 99 / 0.3)"
+            strokeWidth="0.5"
+          />
+        </svg>
+      </div>
     </div>
   )
 });
@@ -22,11 +69,15 @@ const AnimatedGrid = dynamic(() => import('@/components/splash/AnimatedGrid').th
 const SplashHeader = dynamic(() => import('@/components/splash/SplashHeader').then(mod => ({ default: mod.SplashHeader })), { 
   ssr: false,
   loading: () => (
-    <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20 flex items-center justify-between">
-      <div className="h-6 sm:h-7 w-28 bg-gray-800/50 rounded animate-pulse"></div>
+    <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20 flex items-center justify-between opacity-60">
+      {/* Logo skeleton with proper dimensions */}
+      <div className="flex items-center">
+        <div className="h-6 sm:h-7 w-[113px] bg-gray-700/40 rounded animate-pulse"></div>
+      </div>
+      {/* Buttons skeleton with proper spacing */}
       <div className="flex gap-2 sm:gap-3">
-        <div className="h-8 sm:h-10 w-16 sm:w-24 bg-gray-800/50 rounded animate-pulse"></div>
-        <div className="h-8 sm:h-10 w-14 bg-gray-800/50 rounded animate-pulse"></div>
+        <div className="h-8 sm:h-10 w-[70px] sm:w-[90px] bg-gray-700/40 rounded animate-pulse"></div>
+        <div className="h-8 sm:h-10 w-[50px] sm:w-[60px] bg-gray-700/40 rounded animate-pulse"></div>
       </div>
     </div>
   )
