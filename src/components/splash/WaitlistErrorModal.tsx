@@ -67,7 +67,7 @@ export function WaitlistErrorModal({ isOpen, onClose, errorMessage }: WaitlistEr
         {/* Additional message for duplicate emails */}
         {isDuplicateError && (
           <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-blue-200">
-            <p>✅ We'll keep you updated on our progress and reach out when we're ready to launch!</p>
+            <p>✅ We&apos;ll keep you updated on our progress and reach out when we&apos;re ready to launch!</p>
           </div>
         )}
         

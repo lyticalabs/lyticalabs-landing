@@ -1,6 +1,8 @@
 'use client';
 
+/* eslint-disable react/no-unescaped-entities */
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useEffect } from 'react';
 import { useScrolled } from '@/hooks/useScrolled';
 
@@ -210,12 +212,12 @@ export default function CookiePolicyPage() {
 
           {/* Back to Home */}
           <div className="mt-12 text-center">
-            <a 
+            <Link 
               href="/" 
               className="inline-flex items-center bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 text-black font-semibold px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25"
             >
               ← Back to Home
-            </a>
+            </Link>
           </div>
         </div>
         </section>

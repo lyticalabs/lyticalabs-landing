@@ -27,7 +27,7 @@ export function useIsMobile(): boolean {
         const actuallyMobile = isMobileDevice || (isTouchDevice && isSmallScreen);
         
         setIsMobile(actuallyMobile);
-      } catch (error) {
+      } catch {
         // Fallback in case of any errors
         setIsMobile(false);
       }

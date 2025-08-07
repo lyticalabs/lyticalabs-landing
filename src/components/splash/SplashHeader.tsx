@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ContactModal } from '@/components/splash/ContactModal';
@@ -17,7 +18,7 @@ export function SplashHeader() {
       <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20 flex items-center justify-between">
         {/* Lytica Labs Full Logo - Left Side */}
         <div className="flex items-center">
-          <a 
+          <Link 
             href="/" 
             className="transition-opacity duration-300 hover:opacity-80"
           >
@@ -28,7 +29,7 @@ export function SplashHeader() {
               height={29}
               className="h-6 w-auto sm:h-7 sm:w-auto"
             />
-          </a>
+          </Link>
         </div>
 
         {/* Contact Us & Login - Right Side */}

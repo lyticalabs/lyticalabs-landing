@@ -38,12 +38,12 @@ export function WaitlistSuccessModal({ isOpen, onClose, message }: WaitlistSucce
         
         {/* Success Message */}
         <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-          {message || "Thank you for joining our waitlist! We'll keep you updated on our progress and reach out when we're ready to launch."}
+          {message || "Thank you for joining our waitlist! We&apos;ll keep you updated on our progress and reach out when we&apos;re ready to launch."}
         </p>
         
         {/* Additional Info */}
         <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 sm:p-4 text-xs sm:text-sm text-green-200">
-          <p>🚀 You'll be among the first to experience next-generation analytics</p>
+          <p>🚀 You&apos;ll be among the first to experience next-generation analytics</p>
         </div>
         
         {/* Close Button */}
