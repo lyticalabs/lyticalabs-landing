@@ -31,7 +31,7 @@ export function AnimatedGrid() {
   }, []);
 
   return (
-    <div className="fixed inset-0 opacity-20 pointer-events-none">
+    <div className="absolute inset-0 w-full h-full min-h-screen opacity-20 pointer-events-none">
       {/* Main Grid Pattern */}
       <svg className="w-full h-full" style={{ background: 'transparent' }}>
         <defs>

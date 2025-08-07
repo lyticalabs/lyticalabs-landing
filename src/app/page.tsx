@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { DataVisualization } from '@/components/splash/DataVisualization';
 import { GlowingOrbs } from '@/components/splash/GlowingOrbs';
@@ -12,6 +12,12 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Prevent hydration issues by ensuring client-side rendering
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,15 +60,31 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <AnimatedGrid />
-        <GlowingOrbs />
-      </div>
+    <div className="min-h-screen bg-gray-950 text-white relative overflow-x-hidden">
+      {/* Continuous background for scrolling */}
+      <div className="absolute inset-0 w-full min-h-full bg-gray-950" style={{ height: '200vh' }}></div>
+      
+      {/* Background Effects - Only render after hydration, extends full height */}
+      {isClient && (
+        <div className="absolute inset-0 w-full" style={{ height: '200vh' }}>
+          <AnimatedGrid />
+          <GlowingOrbs />
+        </div>
+      )}
 
       {/* Header with Logo and Buttons */}
-      <SplashHeader />
+      {isClient ? (
+        <SplashHeader />
+      ) : (
+        // Fallback header to prevent layout shift
+        <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20 flex items-center justify-between">
+          <div className="h-6 sm:h-7 w-28 bg-gray-800/50 rounded animate-pulse"></div>
+          <div className="flex gap-2 sm:gap-3">
+            <div className="h-8 sm:h-10 w-16 sm:w-24 bg-gray-800/50 rounded animate-pulse"></div>
+            <div className="h-8 sm:h-10 w-14 bg-gray-800/50 rounded animate-pulse"></div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="relative z-10 h-screen flex flex-col px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
@@ -120,7 +142,13 @@ export default function Home() {
             {/* Right Side - Data Visualization */}
             <div className="relative flex justify-center items-center min-h-[300px] md:min-h-[350px]">
               <div className="w-full max-w-md md:max-w-lg scale-75 sm:scale-90 md:scale-100">
-                <DataVisualization />
+                {isClient ? (
+                  <DataVisualization />
+                ) : (
+                  <div className="w-full h-[300px] md:h-[350px] bg-gray-800/30 rounded-lg flex items-center justify-center">
+                    <div className="text-gray-400">Loading visualization...</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

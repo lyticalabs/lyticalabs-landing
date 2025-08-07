@@ -9,14 +9,14 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
-    /* Prevent overscroll bounce */
-    overscroll-behavior: none;
+    /* Prevent overscroll bounce on mobile while allowing vertical scroll */
+    overscroll-behavior-x: none;
     overflow-x: hidden;
   }
   
   html {
-    /* Prevent overscroll bounce */
-    overscroll-behavior: none;
+    /* Prevent overscroll bounce on mobile while allowing vertical scroll */
+    overscroll-behavior-x: none;
     overflow-x: hidden;
   }
 }
