@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+  <!-- Geometric logo mark -->
+  <g transform="translate(50, 50)">
+    <!-- Main dark teal parallelogram shapes -->
+    <path d="M0 120 L80 0 L160 0 L80 120 Z" fill="#1a4d4d"/>
+    <path d="M80 120 L160 0 L240 0 L160 120 Z" fill="#1a4d4d"/>
+    <path d="M0 200 L80 80 L160 80 L80 200 Z" fill="#1a4d4d"/>
+    
+    <!-- Bright green accent shape -->
+    <path d="M80 80 L160 0 L200 40 L120 120 Z" fill="#22c55e"/>
+  </g>
+  
+  <!-- Text: "Lytica Labs" -->
+  <g transform="translate(350, 50)">
+    <!-- "Lytica" text -->
+    <text x="0" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="110" font-weight="600" fill="#1a4d4d" letter-spacing="-2px">Lytica</text>
+    
+    <!-- "Labs" text -->
+    <text x="0" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="110" font-weight="600" fill="#1a4d4d" letter-spacing="-2px">Labs</text>
+  </g>
+</svg> 
