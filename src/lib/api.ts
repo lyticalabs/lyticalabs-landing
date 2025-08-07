@@ -90,7 +90,7 @@ export async function submitContactFormspree(data: ContactData): Promise<boolean
  */
 export async function submitToGoogleScript(data: WaitlistData | ContactData, type: 'waitlist' | 'contact'): Promise<boolean> {
   try {
-    const response = await fetch(API_CONFIG.googleScript.waitlistEndpoint, {
+    await fetch(API_CONFIG.googleScript.waitlistEndpoint, {
       method: 'POST',
       mode: 'no-cors', // Required for Google Apps Script
       headers: {
@@ -126,7 +126,7 @@ export async function submitViaEmailJS(data: WaitlistData | ContactData, type: '
     const response = await emailjs.send(
       API_CONFIG.emailjs.serviceId,
       templateId,
-      data as any,
+      data as unknown as Record<string, unknown>,
       API_CONFIG.emailjs.publicKey
     );
     
