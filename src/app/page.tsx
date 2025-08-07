@@ -101,7 +101,7 @@ export default function Home() {
                     <span className="text-gray-400">Reimagined</span>
                   </h1>
 
-                  <p className="text-base md:text-lg text-gray-300 leading-relaxed max-w-none md:max-w-2xl mx-auto md:mx-0">
+                  <p className="text-base md:text-lg text-gray-300 leading-relaxed max-w-none md:max-w-lg lg:max-w-2xl mx-auto md:mx-0">
                     Transform your data into actionable insights with AI-powered analytics. 
                     Experience the future of data intelligence today.
                   </p>
@@ -109,30 +109,52 @@ export default function Home() {
 
                 {/* Desktop Form - Shown when not on mobile device */}
                 {!isMobile && (
-                  <form onSubmit={handleWaitlistSubmit} className="space-y-4 w-full max-w-lg mx-auto md:mx-0 mt-8">
-                  <div className="flex flex-col sm:flex-row gap-4 w-full">
-                    <input
-                      type="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="flex-1 px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 text-white placeholder-gray-400 h-12 text-base"
-                      required
-                    />
-                    <Button 
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 disabled:from-gray-500 disabled:to-gray-400 text-black font-semibold px-6 sm:px-8 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 shadow-lg shadow-green-500/25 h-12 text-base whitespace-nowrap"
-                    >
-                      {isSubmitting ? 'Joining...' : 'Join Waitlist'}
-                    </Button>
+                  <div className="w-full max-w-lg mx-auto md:mx-0 mt-8">
+                    <form onSubmit={handleWaitlistSubmit} className="space-y-4 w-full">
+                      <div className="flex flex-col sm:flex-row gap-4 w-full">
+                        <input
+                          type="email"
+                          placeholder="Enter your email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="flex-1 px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 text-white placeholder-gray-400 h-12 text-base"
+                          required
+                        />
+                        <Button 
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 disabled:from-gray-500 disabled:to-gray-400 text-black font-semibold px-6 sm:px-8 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 shadow-lg shadow-green-500/25 h-12 text-base whitespace-nowrap"
+                        >
+                          {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                        </Button>
+                      </div>
+                      <p className="text-sm text-center md:text-left">
+                        <span className="inline-block bg-gradient-to-r from-gray-500 via-gray-500 to-gray-500 bg-clip-text text-transparent animate-shine-text">
+                          Be the first to experience next-generation analytics
+                        </span>
+                      </p>
+                    </form>
+
+                    {/* Desktop Stats Section - Under the form for large screens only */}
+                    <div className="mt-8 hidden xl:block">
+                      <div className="bg-gray-900/30 backdrop-blur-sm border border-green-400/20 rounded-lg p-4 md:p-6">
+                        <div className="grid grid-cols-3 gap-4 md:gap-6">
+                          <div className="text-center">
+                            <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">10x</div>
+                            <div className="text-xs md:text-sm text-gray-400">Faster Insights</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">12+</div>
+                            <div className="text-xs md:text-sm text-gray-400">Data Sources</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">70%</div>
+                            <div className="text-xs md:text-sm text-gray-400">Less Input Time</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm text-center md:text-left">
-                    <span className="inline-block bg-gradient-to-r from-gray-500 via-gray-500 to-gray-500 bg-clip-text text-transparent animate-shine-text">
-                      Be the first to experience next-generation analytics
-                    </span>
-                  </p>
-                  </form>
                 )}
               </div>
 
@@ -197,29 +219,30 @@ export default function Home() {
             </div>
           )}
 
-          {/* Desktop Stats Section - Hidden on mobile */}
+          {/* iPad Stats Section - Shows at bottom for iPad sizes only */}
           {!isMobile && (
-            <div className="max-w-7xl mx-auto w-full mt-8">
-            <div className="max-w-lg mx-auto">
-              <div className="bg-gray-900/30 backdrop-blur-sm border border-green-400/20 rounded-lg p-4 md:p-6">
-                <div className="grid grid-cols-3 gap-4 md:gap-6">
-                  <div className="text-center">
-                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">10x</div>
-                    <div className="text-xs md:text-sm text-gray-400">Faster Insights</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">12+</div>
-                    <div className="text-xs md:text-sm text-gray-400">Data Sources</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">70%</div>
-                    <div className="text-xs md:text-sm text-gray-400">Less Input Time</div>
+            <div className="max-w-7xl mx-auto w-full mt-8 xl:hidden">
+              <div className="max-w-lg mx-auto">
+                <div className="bg-gray-900/30 backdrop-blur-sm border border-green-400/20 rounded-lg p-4 md:p-6">
+                  <div className="grid grid-cols-3 gap-4 md:gap-6">
+                    <div className="text-center">
+                      <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">10x</div>
+                      <div className="text-xs md:text-sm text-gray-400">Faster Insights</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">12+</div>
+                      <div className="text-xs md:text-sm text-gray-400">Data Sources</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl md:text-2xl lg:text-3xl font-bold text-green-400">70%</div>
+                      <div className="text-xs md:text-sm text-gray-400">Less Input Time</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            </div>
           )}
+
         </div>
         </section>
 
