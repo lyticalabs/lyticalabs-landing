@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface Orb {
   id: number;
@@ -14,13 +15,23 @@ interface Orb {
 }
 
 export function GlowingOrbs() {
+  const reduceMotion = useReducedMotion();
   const [orbs, setOrbs] = useState<Orb[]>([]);
 
   useEffect(() => {
+    if (reduceMotion) {
+      // Render a static, but still present, emerald wash so the hero
+      // doesn't feel empty. Users who've asked for reduced motion still get
+      // the brand's visual language — just without the constant repositioning.
+      setOrbs([]);
+      return;
+    }
+
     // Generate initial orbs
     const generateOrbs = (): Orb[] => {
-      const colors = ['#22c55e', '#84cc16', '#10b981', '#34d399'];
-      
+      // Emerald-only palette — mirrors the platform brand. No blue, no lime.
+      const colors = ['#10b981', '#34d399', '#059669', '#6ee7b7'];
+
       return Array.from({ length: 8 }, (_, index) => ({
         id: index,
         x: Math.random() * window.innerWidth,
@@ -37,8 +48,8 @@ export function GlowingOrbs() {
 
     // Animation loop
     const animateOrbs = () => {
-      setOrbs(prevOrbs => 
-        prevOrbs.map(orb => {
+      setOrbs((prevOrbs) =>
+        prevOrbs.map((orb) => {
           let newX = orb.x + Math.cos(orb.direction) * orb.speed;
           let newY = orb.y + Math.sin(orb.direction) * orb.speed;
           let newDirection = orb.direction;
@@ -48,7 +59,7 @@ export function GlowingOrbs() {
             newDirection = Math.PI - orb.direction;
             newX = Math.max(0, Math.min(window.innerWidth, newX));
           }
-          
+
           if (newY <= 0 || newY >= window.innerHeight) {
             newDirection = -orb.direction;
             newY = Math.max(0, Math.min(window.innerHeight, newY));
@@ -65,9 +76,9 @@ export function GlowingOrbs() {
     };
 
     const interval = setInterval(animateOrbs, 50);
-    
+
     return () => clearInterval(interval);
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <div className="absolute inset-0 w-full h-full min-h-screen pointer-events-none overflow-hidden">
@@ -87,12 +98,21 @@ export function GlowingOrbs() {
           }}
         />
       ))}
-      
-      {/* Additional Static Glow Effects */}
-      <div className="absolute top-20 left-20 w-64 h-64 bg-green-400/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-32 right-32 w-48 h-48 bg-lime-400/15 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }} />
-      <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-green-500/20 rounded-full blur-xl animate-pulse" style={{ animationDelay: '4s' }} />
-      <div className="absolute bottom-20 left-1/3 w-56 h-56 bg-emerald-400/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+
+      {/* Additional static glow effects — emerald-only to match the brand */}
+      <div className="absolute top-20 left-20 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl animate-pulse" />
+      <div
+        className="absolute bottom-32 right-32 w-48 h-48 bg-emerald-500/15 rounded-full blur-2xl animate-pulse"
+        style={{ animationDelay: '2s' }}
+      />
+      <div
+        className="absolute top-1/2 left-1/4 w-32 h-32 bg-emerald-600/20 rounded-full blur-xl animate-pulse"
+        style={{ animationDelay: '4s' }}
+      />
+      <div
+        className="absolute bottom-20 left-1/3 w-56 h-56 bg-emerald-400/[0.08] rounded-full blur-3xl animate-pulse"
+        style={{ animationDelay: '1s' }}
+      />
     </div>
   );
-} 
+}

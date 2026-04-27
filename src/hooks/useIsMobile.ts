@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Hook to detect if the user is on an actual mobile device (not just a small screen)
@@ -18,14 +18,14 @@ export function useIsMobile(): boolean {
         // Check for mobile user agents
         const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
         const isMobileDevice = mobileRegex.test(navigator.userAgent);
-        
+
         // Also check for touch capability as secondary indicator
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        
+
         // Consider it mobile if it's a mobile user agent OR has touch and small screen
         const isSmallScreen = window.innerWidth < 768;
         const actuallyMobile = isMobileDevice || (isTouchDevice && isSmallScreen);
-        
+
         setIsMobile(actuallyMobile);
       } catch {
         // Fallback in case of any errors
@@ -38,7 +38,7 @@ export function useIsMobile(): boolean {
 
     // Optional: Check on resize (in case of orientation change on mobile)
     window.addEventListener('resize', checkIsMobile);
-    
+
     return () => {
       // Guard against cleanup when window is not available
       if (typeof window !== 'undefined') {

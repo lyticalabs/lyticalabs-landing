@@ -1,0 +1,13 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    Lytica Labs favicon — two interlocking emerald parallelograms.
+    Geometry is sized to fill the full 32×32 viewBox so browser tabs
+    render the mark flush against the tab title (no side padding).
+  -->
+
+  <!-- Top parallelogram — emerald-400 -->
+  <polygon points="8,1 24,1 18,15 2,15" fill="#34d399" />
+
+  <!-- Bottom parallelogram — emerald-500, offset down/right to interlock -->
+  <polygon points="13,17 30,17 24,31 7,31" fill="#10b981" />
+</svg>

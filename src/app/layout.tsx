@@ -1,76 +1,45 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ConditionalNavigation } from "@/components/ConditionalNavigation";
-import { NoSSR } from "@/components/NoSSR";
-import { ThemeFavicon } from "@/components/ThemeFavicon";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+
+const SITE_NAME = 'Lytica Labs';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lyticalabs.ai';
+const DESCRIPTION = 'Lytica Labs turns modern data stacks into an AI-native analytics layer for revenue, operations, and data teams.';
 
 export const metadata: Metadata = {
-  title: "Lytica Labs AI",
-  description: "Landing page for Lytica Labs",
-  icons: {
-    icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon.ico', sizes: 'any' }
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
-    ],
-    other: [
-      { rel: 'manifest', url: '/site.webmanifest' }
-    ]
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Generative Analytics for Revenue & Ops Teams`,
+    template: `%s · ${SITE_NAME}`,
   },
-  manifest: '/site.webmanifest',
-  themeColor: '#22c55e',
+  description: DESCRIPTION,
+  openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Generative Analytics for Revenue & Ops Teams`,
+    description: DESCRIPTION,
+    images: [{ url: '/assets/lytica-brand-dark-224x164.png', width: 224, height: 164, alt: `${SITE_NAME} logo` }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} — Generative Analytics for Revenue & Ops Teams`,
+    description: DESCRIPTION,
+    images: ['/assets/lytica-brand-dark-224x164.png'],
+  },
+  icons: [{ url: '/assets/favicon.svg', type: 'image/svg+xml' }],
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
-        <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#22c55e" />
-        {/* Preload logo for faster loading across all pages */}
-        <link rel="preload" href="/Lytica_logo.png" as="image" />
-      </head>
-
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning
-      >
-        <NoSSR fallback={<div className="min-h-screen bg-gray-950 text-white" />}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ThemeFavicon />
-            <ConditionalNavigation />
-            {children}
-          </ThemeProvider>
-        </NoSSR>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        {children}
       </body>
     </html>
   );

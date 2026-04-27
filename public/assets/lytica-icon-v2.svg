@@ -1,0 +1,9 @@
+<svg width="320" height="352" viewBox="0 0 320 352" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lytica Labs Logo - Two green diagonal parallelograms forming stylized "L" -->
+  
+  <!-- Top parallelogram - lighter green (#34d399 / emerald-400) -->
+  <polygon points="64,0 256,0 192,160 0,160" fill="#34d399"/>
+  
+  <!-- Bottom parallelogram - darker green (#10b981 / emerald-500), offset to form "L" -->
+  <polygon points="128,192 320,192 256,352 64,352" fill="#10b981"/>
+</svg>

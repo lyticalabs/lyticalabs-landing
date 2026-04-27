@@ -1,94 +1,11 @@
 'use client';
 
 /* eslint-disable react/no-unescaped-entities */
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { useScrolled } from '@/hooks/useScrolled';
-
-// Dynamic imports for background effects
-const AnimatedGrid = dynamic(() => import('@/components/splash/AnimatedGrid').then(mod => ({ default: mod.AnimatedGrid })), { ssr: false });
-const GlowingOrbs = dynamic(() => import('@/components/splash/GlowingOrbs').then(mod => ({ default: mod.GlowingOrbs })), { ssr: false });
-const SplashHeader = dynamic(() => import('@/components/splash/SplashHeader').then(mod => ({ default: mod.SplashHeader })), { 
-  ssr: true,
-  loading: () => (
-    <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20 flex items-center justify-between opacity-60">
-      {/* Logo skeleton with proper dimensions */}
-      <div className="flex items-center">
-        <div className="h-6 sm:h-7 w-[113px] bg-gray-700/40 rounded animate-pulse"></div>
-      </div>
-      {/* Buttons skeleton with proper spacing */}
-      <div className="flex gap-2 sm:gap-3">
-        <div className="h-8 sm:h-10 w-[70px] sm:w-[90px] bg-gray-700/40 rounded animate-pulse"></div>
-        <div className="h-8 sm:h-10 w-[50px] sm:w-[60px] bg-gray-700/40 rounded animate-pulse"></div>
-      </div>
-    </div>
-  )
-});
+import { LegalPageLayout } from '@/components/marketing/LegalPageLayout';
 
 export default function PrivacyPage() {
-  const isScrolled = useScrolled(80);
-
-  // Set document title and meta description for client-side SEO
-  useEffect(() => {
-    document.title = 'Privacy Policy | Lytica Labs';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Privacy policy for Lytica Labs - Learn how we collect, use, and protect your personal information.');
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = 'description';
-      meta.content = 'Privacy policy for Lytica Labs - Learn how we collect, use, and protect your personal information.';
-      document.head.appendChild(meta);
-    }
-
-    // Prevent overscroll behavior
-    document.body.style.overscrollBehavior = 'none';
-    document.documentElement.style.overscrollBehavior = 'none';
-
-    return () => {
-      // Cleanup on unmount
-      document.body.style.overscrollBehavior = '';
-      document.documentElement.style.overscrollBehavior = '';
-    };
-  }, []);
-
   return (
-    <main className="min-h-screen bg-gray-950 text-white relative overflow-x-hidden w-full overscroll-none touch-pan-y">
-      {/* Background Effects */}
-      <div className="fixed inset-0 w-full h-full">
-        <AnimatedGrid />
-        <GlowingOrbs />
-      </div>
-
-      {/* Header with Logo and Buttons */}
-      <SplashHeader />
-
-      {/* Sticky Navigation - Shows when scrolled */}
-      {isScrolled && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-gray-950 border-b border-green-400/30 shadow-xl shadow-black/50 transition-all duration-300 min-h-[80px] w-full">
-          <div className="bg-gray-950 w-full h-full">
-            <SplashHeader />
-          </div>
-        </div>
-      )}
-
-      {/* Main Content Container */}
-      <div className="relative z-10 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden overscroll-none">
-        {/* Content Section */}
-        <section className="flex-1 flex flex-col px-4 sm:px-6 lg:px-8 pt-24 pb-8">
-        <div className="max-w-4xl mx-auto w-full">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-green-200 via-white to-green-200 bg-clip-text text-transparent">
-            Privacy Policy
-          </h1>
-          <p className="text-gray-400 text-lg">Last updated July 01, 2025</p>
-        </div>
-
-        {/* Content */}
-        <div className="prose prose-invert prose-lg max-w-none">
-          <div className="space-y-8">
+    <LegalPageLayout title="Privacy Policy" lastUpdated="July 01, 2025">
             
             {/* Introduction */}
             <section>
@@ -229,21 +146,6 @@ export default function PrivacyPage() {
                 To submit a data access, portability, correction, or deletion request, please visit: <a href="http://www.lyticalabs.ai/data-request" className="text-green-400 hover:text-green-300 transition-colors">http://www.lyticalabs.ai/data-request</a> or contact us at <a href="mailto:privacy@lyticalabs.ai" className="text-green-400 hover:text-green-300 transition-colors">privacy@lyticalabs.ai</a>.
               </p>
             </section>
-          </div>
-        </div>
-
-          {/* Back to Home */}
-          <div className="mt-12 text-center">
-            <Link 
-              href="/" 
-              className="inline-flex items-center bg-gradient-to-r from-green-500 to-green-400 hover:from-green-600 hover:to-green-500 text-black font-semibold px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25"
-            >
-              ← Back to Home
-            </Link>
-          </div>
-        </div>
-        </section>
-      </div>
-    </main>
+    </LegalPageLayout>
   );
 }

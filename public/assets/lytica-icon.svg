@@ -1,0 +1,11 @@
+<svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Lytica</title>
+  <!-- Lytica Labs icon: two interlocking parallelograms forming a stylized "L".
+       Kept as clean integer coordinates in a 20x22 viewBox so the mark stays
+       crisp at the small sizes used in headers/footers (typically rendered
+       at h-5 / 20px high). -->
+  <!-- Top parallelogram - lighter green (#34d399 / emerald-400) -->
+  <polygon points="4,0 16,0 12,10 0,10" fill="#34d399"/>
+  <!-- Bottom parallelogram - darker green (#10b981 / emerald-500), offset to form "L" -->
+  <polygon points="8,12 20,12 16,22 4,22" fill="#10b981"/>
+</svg>
