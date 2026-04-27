@@ -39,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
+        {/* Deployment marker: dev-branch-2026-04-27 */}
         {children}
       </body>
     </html>
